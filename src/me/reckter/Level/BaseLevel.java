@@ -115,6 +115,7 @@ public class BaseLevel {
 	    entities.add(new MergingLogic(this));
 	    entities.add(new FollowingLogic(this));
 	    entities.add(new Gravity(this));
+	    entities.add(new CollisionChecking(this));
     }
 
     /**

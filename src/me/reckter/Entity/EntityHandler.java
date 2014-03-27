@@ -59,6 +59,7 @@ public class EntityHandler {
         logicHandler.logic(delta);
 
         //collision checking
+	    /*
         BaseEntity entityA, entityB;
         for(int i = 0; i < entities.size(); i++){
             entityA = entities.get(i);
@@ -78,6 +79,7 @@ public class EntityHandler {
                 }
             }
         }
+        */
 
 
         //removing all dead entities

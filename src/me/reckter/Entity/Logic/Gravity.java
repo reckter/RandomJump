@@ -3,6 +3,7 @@ package me.reckter.Entity.Logic;
 import me.reckter.Entity.Category.Category;
 import me.reckter.Entity.Category.Matching.Matching;
 import me.reckter.Entity.Entities.BaseEntity;
+import me.reckter.Entity.Events.DamageEvent;
 import me.reckter.Entity.Events.Handler.CollisionEventHandler;
 import me.reckter.Entity.Events.Handler.JumpEventHandler;
 import me.reckter.Entity.Events.Handler.TickEventHandler;
@@ -36,7 +37,7 @@ public class Gravity extends BaseLogic implements TickEventHandler, CollisionEve
 		if(offender.categories.contains(Category.PASSABLE_PLATFORM)) {
 			float victimY = victim.getHitBox().getMaxY();
 			float offenderY = offender.getHitBox().getMinY();
-			if(victimY >= offenderY && victimY < offenderY + offender.getHitBox().getHeight() / 10 && victim.movement.y >= 0){
+			if(victimY >= offenderY && victimY < offenderY + offender.getHitBox().getHeight() / 5 && victim.movement.y >= 0){
 				victim.movement.y = 0;
 				//victim.coords.y = offender.coords.y ;//- victim.getAAHitBox().getHeight() - 1;
 				//victim.coords.y += offender.getHitBox().getMinY() - (victim.getHitBox().getMinY() + victim.getHitBox().getHeight());
@@ -68,6 +69,8 @@ public class Gravity extends BaseLogic implements TickEventHandler, CollisionEve
 					victim.movement.y = 0;
 				}
 			}
+		} else if(offender.categories.contains(Category.DAMAGE_PLATFORM)) {
+			victim.level.fire(new DamageEvent(10), victim, offender);
 		}
 	}
 

@@ -66,6 +66,8 @@ public class BaseEntity {
         //categories.add(Category.BOUNCES);
         categories.add(Category.MAX_MOVEMENT);
         categories.add(Category.DAMAGABLE);
+	    categories.add(Category.NEEDS_COLLISION_CHECKING);
+	    categories.add(Category.NEEDS_COLLISION_CHECKING_AGAINST);
     }
 
 

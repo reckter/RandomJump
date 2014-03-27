@@ -68,6 +68,8 @@ public class BaseProjectile extends BaseEntity {
 
         categories.add(Category.PROJECTILE);
 		categories.add(Category.NORMAL_PROJECTILE_COLLISION);
+		categories.add(Category.NEEDS_COLLISION_CHECKING);
+		categories.add(Category.NEEDS_COLLISION_CHECKING_AGAINST);
         setHeight(2);
     }
 

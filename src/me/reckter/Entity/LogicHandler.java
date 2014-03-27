@@ -1,5 +1,6 @@
 package me.reckter.Entity;
 
+import me.reckter.Entity.Category.Category;
 import me.reckter.Entity.Entities.BaseEntity;
 import me.reckter.Entity.Events.*;
 import me.reckter.Entity.Events.Handler.*;
@@ -17,11 +18,13 @@ import java.util.HashMap;
 public class LogicHandler {
 
     HashMap<BaseLogic, ArrayList<BaseEntity>> logics;
+	ArrayList<BaseEntity> needsCollisionCheckedAgainst;
 
     EntityHandler entities;
 
     public LogicHandler(EntityHandler entityHandler) {
         entities = entityHandler;
+	    needsCollisionCheckedAgainst = new ArrayList<BaseEntity>();
         logics = new HashMap<BaseLogic, ArrayList<BaseEntity>>();
     }
 
@@ -34,6 +37,13 @@ public class LogicHandler {
                 }
             }
         }
+	    for(BaseLogic logic: new ArrayList<BaseLogic>(logics.keySet())) {
+		    if(logic instanceof CheckCollisionHandler) {
+			    for(BaseEntity entity: logics.get(logic)) {
+				    ((CheckCollisionHandler) logic).checkCollision(entity, needsCollisionCheckedAgainst);
+			    }
+		    }
+	    }
     }
 
 
@@ -80,12 +90,18 @@ public class LogicHandler {
     public void updateLogics() {
         for(BaseLogic logic: logics.keySet()) {
             logics.get(logic).clear();
-            for(BaseEntity entiy: entities.entities) {
-                if(entiy.matches(logic.matching)) {
-                    logics.get(logic).add(entiy);
+            for(BaseEntity entity: entities.entities) {
+                if(entity.matches(logic.matching)) {
+                    logics.get(logic).add(entity);
                 }
             }
         }
+	    needsCollisionCheckedAgainst.clear();
+	    for(BaseEntity entity: entities.entities) {
+		    if(entity.categories.contains(Category.NEEDS_COLLISION_CHECKING_AGAINST)) {
+			    needsCollisionCheckedAgainst.add(entity);
+		    }
+	    }
     }
 
     public void fireCollsionEvent(BaseEntity victim, BaseEntity offender) {

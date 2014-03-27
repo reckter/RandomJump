@@ -38,6 +38,7 @@ public class BasePlatform extends BaseEntity {
 		categories = new TreeSet<Category>();
 		isAlive = true;
 		categories.add(Category.PLATFORM);
+		categories.add(Category.NEEDS_COLLISION_CHECKING);
 	}
 
 	public void render(Graphics g) {
